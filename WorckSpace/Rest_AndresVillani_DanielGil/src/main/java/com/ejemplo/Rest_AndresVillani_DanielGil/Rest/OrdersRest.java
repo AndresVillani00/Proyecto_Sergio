@@ -15,19 +15,19 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.Customer;
-import com.ejemplo.Rest_AndresVillani_DanielGil.Models.CustomersModel;
+import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.Order;
+import com.ejemplo.Rest_AndresVillani_DanielGil.Models.OrdersModel;
 
-@Path("clientes")
+@Path("ordenes")
 public class OrdersRest {
-    static CustomersModel customers;
+    static OrdersModel orders;
 
     public OrdersRest() {
 
 	try {
-	    customers = new CustomersModel();
+	    orders = new OrdersModel();
 	} catch (SQLException e) {
-	    System.err.println("No puedo abrir la conexion con 'Customers': " + e.getMessage());
+	    System.err.println("No puedo abrir la conexion con 'Orders': " + e.getMessage());
 	}
     }
 
@@ -38,10 +38,10 @@ public class OrdersRest {
 	                 @QueryParam("offset") Integer offset) {
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
 	
-	if (customers != null) {
-	    ArrayList<Customer> listaClientes = customers.lista(filter, limit, offset);
-	    if (listaClientes != null) {
-		respuesta = Response.status(Response.Status.OK).entity(listaClientes).build();
+	if (orders != null) {
+	    ArrayList<Order> listaOrdenes = orders.lista(filter, limit, offset);
+	    if (listaOrdenes != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaOrdenes).build();
 	    }
 
 	}
@@ -55,10 +55,10 @@ public class OrdersRest {
 	
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).entity("No he encotrado").build();
 	
-	if (customers != null) {
-	    Customer cliente = customers.read(id);
-	    if (cliente != null) {
-		respuesta = Response.status(Response.Status.OK).entity(cliente).build();
+	if (orders != null) {
+	    Order ordenes = orders.read(id);
+	    if (ordenes != null) {
+		respuesta = Response.status(Response.Status.OK).entity(ordenes).build();
 	    }
 	}
 	return respuesta;
@@ -67,12 +67,12 @@ public class OrdersRest {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Customer cliente) {
-	Integer idcliente;
+    public Response add(Order ordenes) {
+	Integer idOrdenes;
 	Response response;
 	try {
-	    idcliente = customers.insert(cliente);
-	    response = Response.status(Response.Status.CREATED).entity(idcliente).build();
+	    idOrdenes = orders.insert(ordenes);
+	    response = Response.status(Response.Status.CREATED).entity(idOrdenes).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.CONFLICT).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
@@ -83,12 +83,12 @@ public class OrdersRest {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Customer cliente) {
-	Boolean clienteactualizado;
+    public Response update(Order ordenes) {
+	Boolean ordenActualizado;
 	Response response;
 	try {
-	    clienteactualizado = customers.update(cliente);
-	    response = Response.status(Response.Status.OK).entity(clienteactualizado).build();
+	    ordenActualizado = orders.update(ordenes);
+	    response = Response.status(Response.Status.OK).entity(ordenActualizado).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.NOT_MODIFIED).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
@@ -101,11 +101,11 @@ public class OrdersRest {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") Integer id) {
-	Boolean clienteactualizado;
+	Boolean ordenActualizado;
 	Response response;
 	try {
-	    clienteactualizado = customers.delete(id);
-	    response = Response.status(Response.Status.OK).entity(clienteactualizado).build();
+	    ordenActualizado = orders.delete(id);
+	    response = Response.status(Response.Status.OK).entity(ordenActualizado).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.NOT_FOUND).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();

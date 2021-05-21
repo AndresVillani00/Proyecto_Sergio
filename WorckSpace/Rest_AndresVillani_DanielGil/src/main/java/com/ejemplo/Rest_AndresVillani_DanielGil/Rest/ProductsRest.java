@@ -15,19 +15,19 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.Customer;
-import com.ejemplo.Rest_AndresVillani_DanielGil.Models.CustomersModel;
+import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.Product;
+import com.ejemplo.Rest_AndresVillani_DanielGil.Models.ProductsModel;
 
-@Path("clientes")
+@Path("productos")
 public class ProductsRest {
-    static CustomersModel customers;
+    static ProductsModel products;
 
     public ProductsRest() {
 
 	try {
-	    customers = new CustomersModel();
+	    products = new ProductsModel();
 	} catch (SQLException e) {
-	    System.err.println("No puedo abrir la conexion con 'Customers': " + e.getMessage());
+	    System.err.println("No puedo abrir la conexion con 'Products': " + e.getMessage());
 	}
     }
 
@@ -38,10 +38,10 @@ public class ProductsRest {
 	                 @QueryParam("offset") Integer offset) {
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
 	
-	if (customers != null) {
-	    ArrayList<Customer> listaClientes = customers.lista(filter, limit, offset);
-	    if (listaClientes != null) {
-		respuesta = Response.status(Response.Status.OK).entity(listaClientes).build();
+	if (products != null) {
+	    ArrayList<Product> listaProductos = products.lista(filter, limit, offset);
+	    if (listaProductos != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaProductos).build();
 	    }
 
 	}
@@ -55,10 +55,10 @@ public class ProductsRest {
 	
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).entity("No he encotrado").build();
 	
-	if (customers != null) {
-	    Customer cliente = customers.read(id);
-	    if (cliente != null) {
-		respuesta = Response.status(Response.Status.OK).entity(cliente).build();
+	if (products != null) {
+	    Product productos = products.read(id);
+	    if (productos != null) {
+		respuesta = Response.status(Response.Status.OK).entity(productos).build();
 	    }
 	}
 	return respuesta;
@@ -67,12 +67,12 @@ public class ProductsRest {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Customer cliente) {
-	Integer idcliente;
+    public Response add(Product productos) {
+	Integer idProducto;
 	Response response;
 	try {
-	    idcliente = customers.insert(cliente);
-	    response = Response.status(Response.Status.CREATED).entity(idcliente).build();
+		idProducto = products.insert(productos);
+	    response = Response.status(Response.Status.CREATED).entity(idProducto).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.CONFLICT).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
@@ -83,12 +83,12 @@ public class ProductsRest {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Customer cliente) {
-	Boolean clienteactualizado;
+    public Response update(Product productos) {
+	Boolean productoActualizado;
 	Response response;
 	try {
-	    clienteactualizado = customers.update(cliente);
-	    response = Response.status(Response.Status.OK).entity(clienteactualizado).build();
+	    productoActualizado = products.update(productos);
+	    response = Response.status(Response.Status.OK).entity(productoActualizado).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.NOT_MODIFIED).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
@@ -101,11 +101,11 @@ public class ProductsRest {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") Integer id) {
-	Boolean clienteactualizado;
+	Boolean productoActualizado;
 	Response response;
 	try {
-	    clienteactualizado = customers.delete(id);
-	    response = Response.status(Response.Status.OK).entity(clienteactualizado).build();
+		productoActualizado = products.delete(id);
+	    response = Response.status(Response.Status.OK).entity(productoActualizado).build();
 	} catch (Exception e) {
 	    response = Response.status(Response.Status.NOT_FOUND).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
