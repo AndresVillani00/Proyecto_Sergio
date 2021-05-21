@@ -15,12 +15,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.Customer;
 import com.ejemplo.Rest_AndresVillani_DanielGil.Entities.OrderDetail;
-import com.ejemplo.Rest_AndresVillani_DanielGil.Models.CustomersModel;
 import com.ejemplo.Rest_AndresVillani_DanielGil.Models.OrderDetailsModel;
 
-@Path("clientes")
+@Path("DetallesPedidos")
 public class OrderDetailRest {
     static OrderDetailsModel OrdersDetails;
 
