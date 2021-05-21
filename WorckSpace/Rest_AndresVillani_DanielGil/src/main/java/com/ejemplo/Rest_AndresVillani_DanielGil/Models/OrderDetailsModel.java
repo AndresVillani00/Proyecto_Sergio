@@ -43,8 +43,8 @@ public class OrderDetailsModel {
 			rs.getInt("status_id"),
 			rs.getInt("purchase_order_id"),
 			rs.getInt("inventory_id"),
-			rs.getDouble("quantity"),
-			rs.getDouble("unit_price"),
+			rs.getBigDecimal("quantity"),
+			rs.getBigDecimal("unit_price"),
 			rs.getDouble("discount"),
 			rs.getDate("date_allocated"));
 	    };
@@ -78,8 +78,8 @@ public class OrderDetailsModel {
 		ps.setInt(3, ordersDetails.getStatus_id());
 		ps.setInt(4, ordersDetails.getPurchase_order_id());
 		ps.setInt(5, ordersDetails.getInventory_id());
-		ps.setDouble(6, ordersDetails.getQuantity());
-		ps.setDouble(7, ordersDetails.getUnit_price());
+		ps.setBigDecimal(6, ordersDetails.getQuantity());
+		ps.setBigDecimal(7, ordersDetails.getUnit_price());
 		ps.setDouble(8, ordersDetails.getDiscount());
 		ps.setDate(9, ordersDetails.getDate_allocated());
 	    
@@ -141,8 +141,8 @@ public class OrderDetailsModel {
 		ps.setInt(3, ordersDetails.getStatus_id());
 		ps.setInt(4, ordersDetails.getPurchase_order_id());
 		ps.setInt(5, ordersDetails.getInventory_id());
-		ps.setDouble(6, ordersDetails.getQuantity());
-		ps.setDouble(7, ordersDetails.getUnit_price());
+		ps.setBigDecimal(6, ordersDetails.getQuantity());
+		ps.setBigDecimal(7, ordersDetails.getUnit_price());
 		ps.setDouble(8, ordersDetails.getDiscount());
 		ps.setDate(9, ordersDetails.getDate_allocated());
 
@@ -192,8 +192,8 @@ public class OrderDetailsModel {
 				rs.getInt("status_id"),
 				rs.getInt("purchase_order_id"),
 				rs.getInt("inventory_id"),
-				rs.getDouble("quantity"),
-				rs.getDouble("unit_price"),
+				rs.getBigDecimal("quantity"),
+				rs.getBigDecimal("unit_price"),
 				rs.getDouble("discount"),
 				rs.getDate("date_allocated")));
 	    };

@@ -1,5 +1,6 @@
 package com.ejemplo.Rest_AndresVillani_DanielGil.Entities;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.json.bind.annotation.JsonbPropertyOrder;
@@ -30,8 +31,8 @@ public class Order {
 	private Integer employee_id;
 	private Integer customer_id;
 	private Integer shipper_id;
-	private Integer tax_status_id;
-	private Integer status_id;
+	private Boolean tax_status_id;
+	private Boolean status_id;
 	private Date order_date;
 	private Date shipped_date;
 	private Date paid_date;
@@ -43,8 +44,8 @@ public class Order {
 	private String ship_country_region;
 	private String payment_type;
 	private String notes;
-	private double shipping_fee;
-	private double taxes;
+	private BigDecimal shipping_fee;
+	private BigDecimal taxes;
 	private double tax_rate;
 
 	
@@ -52,9 +53,9 @@ public class Order {
 
 	}
 
-	public Order(Integer id, Integer employee_id, Integer customer_id, Integer shipper_id, Integer tax_status_id, Integer status_id,
+	public Order(Integer id, Integer employee_id, Integer customer_id, Integer shipper_id, Boolean tax_status_id, Boolean status_id,
 			Date order_date, Date shipped_date, Date paid_date, String ship_name, String ship_address, String ship_city, String ship_state_province,
-			String ship_zip_postal_code, String ship_country_region, String payment_type, String notes, double shipping_fee, double taxes, double tax_rate) {
+			String ship_zip_postal_code, String ship_country_region, String payment_type, String notes, BigDecimal shipping_fee, BigDecimal taxes, double tax_rate) {
 
 		this.id = id; 
 		this.employee_id = employee_id; 
@@ -110,19 +111,19 @@ public class Order {
 		this.shipper_id = shipper_id;
 	}
 
-	public Integer getTax_status_id() {
+	public Boolean getTax_status_id() {
 		return tax_status_id;
 	}
 
-	public void setTax_status_id(Integer tax_status_id) {
+	public void setTax_status_id(Boolean tax_status_id) {
 		this.tax_status_id = tax_status_id;
 	}
 
-	public Integer getStatus_id() {
+	public Boolean getStatus_id() {
 		return status_id;
 	}
 
-	public void setStatus_id(Integer status_id) {
+	public void setStatus_id(Boolean status_id) {
 		this.status_id = status_id;
 	}
 
@@ -214,19 +215,19 @@ public class Order {
 		this.notes = notes;
 	}
 
-	public double getShipping_fee() {
+	public BigDecimal getShipping_fee() {
 		return shipping_fee;
 	}
 
-	public void setShipping_fee(double shipping_fee) {
+	public void setShipping_fee(BigDecimal shipping_fee) {
 		this.shipping_fee = shipping_fee;
 	}
 
-	public double getTaxes() {
+	public BigDecimal getTaxes() {
 		return taxes;
 	}
 
-	public void setTaxes(double taxes) {
+	public void setTaxes(BigDecimal taxes) {
 		this.taxes = taxes;
 	}
 

@@ -40,7 +40,7 @@ public class ProductsModel {
 			rs.getInt("id"),
 			rs.getInt("reorder_level"),
 			rs.getInt("target_level"),
-			rs.getInt("discontinued"),
+			rs.getBoolean("discontinued"),
 			rs.getInt("minimum_reorder_quantity"),
 			rs.getString("supplier_ids"),
 			rs.getString("product_code"),
@@ -48,8 +48,8 @@ public class ProductsModel {
 			rs.getString("description"),
 			rs.getString("quantity_per_unit"),
 			rs.getString("category"),
-			rs.getDouble("standard_cost"),
-			rs.getDouble("list_price"),
+			rs.getBigDecimal("standard_cost"),
+			rs.getBigDecimal("list_price"),
 			rs.getBlob("attachments"));
 	    };
 	    
@@ -79,7 +79,7 @@ public class ProductsModel {
 	    ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	    ps.setInt(1, productos.getReorder_level());
 		ps.setInt(2, productos.getTarget_level());
-		ps.setInt(3, productos.getDiscontinued());
+		ps.setBoolean(3, productos.getDiscontinued());
 		ps.setInt(4, productos.getMinimum_reorder_quantity());
 		ps.setString(5, productos.getSupplier_ids());
 		ps.setString(6, productos.getProduct_code());
@@ -87,8 +87,8 @@ public class ProductsModel {
 		ps.setString(8, productos.getDescription());
 		ps.setString(9, productos.getQuantity_per_unit());
 		ps.setString(10, productos.getCategory());
-		ps.setDouble(11, productos.getStandard_cost());
-		ps.setDouble(12, productos.getList_price());
+		ps.setBigDecimal(11, productos.getStandard_cost());
+		ps.setBigDecimal(12, productos.getList_price());
 		ps.setBlob(13, productos.getAttachment());
 		
 	    if (ps.executeUpdate() > 0) {
@@ -150,7 +150,7 @@ public class ProductsModel {
 	    ps = conexion.prepareStatement(sql);
 	    ps.setInt(1, productos.getReorder_level());
 		ps.setInt(2, productos.getTarget_level());
-		ps.setInt(3, productos.getDiscontinued());
+		ps.setBoolean(3, productos.getDiscontinued());
 		ps.setInt(4, productos.getMinimum_reorder_quantity());
 		ps.setString(5, productos.getSupplier_ids());
 		ps.setString(6, productos.getProduct_code());
@@ -158,8 +158,8 @@ public class ProductsModel {
 		ps.setString(8, productos.getDescription());
 		ps.setString(9, productos.getQuantity_per_unit());
 		ps.setString(10, productos.getCategory());
-		ps.setDouble(11, productos.getStandard_cost());
-		ps.setDouble(12, productos.getList_price());
+		ps.setBigDecimal(11, productos.getStandard_cost());
+		ps.setBigDecimal(12, productos.getList_price());
 		ps.setBlob(13, productos.getAttachment());
 
 	    resultado = (ps.executeUpdate() > 0);
@@ -208,7 +208,7 @@ public class ProductsModel {
 	    		rs.getInt("id"),
 				rs.getInt("reorder_level"),
 				rs.getInt("target_level"),
-				rs.getInt("discontinued"),
+				rs.getBoolean("discontinued"),
 				rs.getInt("minimum_reorder_quantity"),
 				rs.getString("supplier_ids"),
 				rs.getString("product_code"),
@@ -216,8 +216,8 @@ public class ProductsModel {
 				rs.getString("description"),
 				rs.getString("quantity_per_unit"),
 				rs.getString("category"),
-				rs.getDouble("standard_cost"),
-				rs.getDouble("list_price"),
+				rs.getBigDecimal("standard_cost"),
+				rs.getBigDecimal("list_price"),
 				rs.getBlob("attachments")));
 	    };
 	} catch (SQLException e) {

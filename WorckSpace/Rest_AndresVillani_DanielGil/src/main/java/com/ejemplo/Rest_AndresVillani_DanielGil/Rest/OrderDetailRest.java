@@ -41,9 +41,9 @@ public class OrderDetailRest {
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
 	
 	if (OrdersDetails != null) {
-	    ArrayList<OrderDetail> listaClientes = OrdersDetails.lista(filter, limit, offset);
-	    if (listaClientes != null) {
-		respuesta = Response.status(Response.Status.OK).entity(listaClientes).build();
+	    ArrayList<OrderDetail> listaDetallesPedidos = OrdersDetails.lista(filter, limit, offset);
+	    if (listaDetallesPedidos != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaDetallesPedidos).build();
 	    }
 
 	}

@@ -1,5 +1,6 @@
 package com.ejemplo.Rest_AndresVillani_DanielGil.Entities;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.json.bind.annotation.JsonbPropertyOrder;
@@ -22,8 +23,8 @@ public class OrderDetail {
 	private Integer status_id;
 	private Integer purchase_order_id;
 	private Integer inventory_id;
-	private double quantity;
-	private double unit_price;
+	private BigDecimal quantity;
+	private BigDecimal unit_price;
 	private double discount;
 	private Date date_allocated;
 	
@@ -32,7 +33,7 @@ public class OrderDetail {
 	}
 
 	public OrderDetail(Integer id, Integer order_id, Integer product_id, Integer status_id, Integer purchase_order_id,
-			Integer inventory_id, double quantity, double unit_price, double discount, Date date_allocated) {
+			Integer inventory_id, BigDecimal quantity, BigDecimal unit_price, double discount, Date date_allocated) {
 
 		this.id = id; 
 		this.order_id = order_id; 
@@ -94,19 +95,19 @@ public class OrderDetail {
 		this.inventory_id = inventory_id;
 	}
 
-	public double getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
-	public double getUnit_price() {
+	public BigDecimal getUnit_price() {
 		return unit_price;
 	}
 
-	public void setUnit_price(double unit_price) {
+	public void setUnit_price(BigDecimal unit_price) {
 		this.unit_price = unit_price;
 	}
 

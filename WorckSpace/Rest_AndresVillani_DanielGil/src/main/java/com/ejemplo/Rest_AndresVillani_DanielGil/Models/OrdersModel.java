@@ -42,8 +42,8 @@ public class OrdersModel {
 			rs.getInt("employee_id"),
 			rs.getInt("customer_id"),
 			rs.getInt("shipper_id"),
-			rs.getInt("tax_status_id"),
-			rs.getInt("status_id"),
+			rs.getBoolean("tax_status_id"),
+			rs.getBoolean("status_id"),
 			rs.getDate("order_date"),
 			rs.getDate("shipped_date"),
 			rs.getDate("paid_date"),
@@ -55,8 +55,8 @@ public class OrdersModel {
 			rs.getString("ship_country_region"),
 			rs.getString("payment_type"),
 			rs.getString("notes"),
-			rs.getDouble("shipping_fee"),
-			rs.getDouble("taxes"),
+			rs.getBigDecimal("shipping_fee"),
+			rs.getBigDecimal("taxes"),
 			rs.getDouble("tax_rate"));
 	    };
 	    
@@ -88,8 +88,8 @@ public class OrdersModel {
 		ps.setInt(1, ordenes.getEmployee_id());
 		ps.setInt(2, ordenes.getCustomer_id());
 		ps.setInt(3, ordenes.getShipper_id());
-		ps.setInt(4, ordenes.getTax_status_id());
-		ps.setInt(5, ordenes.getStatus_id());
+		ps.setBoolean(4, ordenes.getTax_status_id());
+		ps.setBoolean(5, ordenes.getStatus_id());
 		ps.setDate(6, ordenes.getOrder_date());
 		ps.setDate(7, ordenes.getShipped_date());
 		ps.setDate(8, ordenes.getPaid_date());
@@ -101,8 +101,8 @@ public class OrdersModel {
 		ps.setString(14, ordenes.getShip_country_region());
 		ps.setString(15, ordenes.getPayment_type());
 		ps.setString(16, ordenes.getNotes());
-		ps.setDouble(17, ordenes.getShipping_fee());
-		ps.setDouble(18, ordenes.getTaxes());
+		ps.setBigDecimal(17, ordenes.getShipping_fee());
+		ps.setBigDecimal(18, ordenes.getTaxes());
 		ps.setDouble(19, ordenes.getTax_rate());
 	    
 	    if (ps.executeUpdate() > 0) {
@@ -165,13 +165,14 @@ public class OrdersModel {
 		+ "taxes = ?, "
 		+ "tax_rate = ? "
 		+ "where id = ?";
+	
 	try {
 	    ps = conexion.prepareStatement(sql);
 	    ps.setInt(1, ordenes.getEmployee_id());
 		ps.setInt(2, ordenes.getCustomer_id());
 		ps.setInt(3, ordenes.getShipper_id());
-		ps.setInt(4, ordenes.getTax_status_id());
-		ps.setInt(5, ordenes.getStatus_id());
+		ps.setBoolean(4, ordenes.getTax_status_id());
+		ps.setBoolean(5, ordenes.getStatus_id());
 		ps.setDate(6, ordenes.getOrder_date());
 		ps.setDate(7, ordenes.getShipped_date());
 		ps.setDate(8, ordenes.getPaid_date());
@@ -183,8 +184,8 @@ public class OrdersModel {
 		ps.setString(14, ordenes.getShip_country_region());
 		ps.setString(15, ordenes.getPayment_type());
 		ps.setString(16, ordenes.getNotes());
-		ps.setDouble(17, ordenes.getShipping_fee());
-		ps.setDouble(18, ordenes.getTaxes());
+		ps.setBigDecimal(17, ordenes.getShipping_fee());
+		ps.setBigDecimal(18, ordenes.getTaxes());
 		ps.setDouble(19, ordenes.getTax_rate());
 	    ps.setInt(20, ordenes.getId());
 
@@ -241,8 +242,8 @@ public class OrdersModel {
 				rs.getInt("employee_id"),
 				rs.getInt("customer_id"),
 				rs.getInt("shipper_id"),
-				rs.getInt("tax_status_id"),
-				rs.getInt("status_id"),
+				rs.getBoolean("tax_status_id"),
+				rs.getBoolean("status_id"),
 				rs.getDate("order_date"),
 				rs.getDate("shipped_date"),
 				rs.getDate("paid_date"),
@@ -254,8 +255,8 @@ public class OrdersModel {
 				rs.getString("ship_country_region"),
 				rs.getString("payment_type"),
 				rs.getString("notes"),
-				rs.getDouble("shipping_fee"),
-				rs.getDouble("taxes"),
+				rs.getBigDecimal("shipping_fee"),
+				rs.getBigDecimal("taxes"),
 				rs.getDouble("tax_rate")));
 	    };
 	} catch (SQLException e) {

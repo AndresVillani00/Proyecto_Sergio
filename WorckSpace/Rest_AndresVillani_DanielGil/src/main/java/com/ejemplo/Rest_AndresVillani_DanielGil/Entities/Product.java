@@ -1,6 +1,7 @@
 package com.ejemplo.Rest_AndresVillani_DanielGil.Entities;
 
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 
 import javax.json.bind.annotation.JsonbPropertyOrder;
@@ -23,7 +24,7 @@ public class Product {
 	private Integer id;
 	private Integer reorder_level;
 	private Integer target_level;
-	private Integer discontinued;
+	private Boolean discontinued;
 	private Integer minimum_reorder_quantity;
 	private String supplier_ids;
 	private String product_code;
@@ -31,18 +32,18 @@ public class Product {
 	private String description;
 	private String quantity_per_unit;
 	private String category;
-	private double standard_cost;
-	private double list_price;
+	private BigDecimal standard_cost;
+	private BigDecimal list_price;
 	private Blob attachment;
 	
 	public Product() {
 
 	}
 
-	public Product(Integer id, Integer reorder_level, Integer target_level, Integer discontinued,
+	public Product(Integer id, Integer reorder_level, Integer target_level, Boolean discontinued,
 			Integer minimum_reorder_quantity, String supplier_ids, String product_code, String product_name,
-			String description, String quantity_per_unit, String category, double standard_cost,
-			double list_price, Blob attachment) {
+			String description, String quantity_per_unit, String category, BigDecimal standard_cost,
+			BigDecimal list_price, Blob attachment) {
 
 		this.id = id;
 		this.reorder_level = reorder_level;
@@ -84,11 +85,11 @@ public class Product {
 		this.target_level = target_level;
 	}
 
-	public Integer getDiscontinued() {
+	public Boolean getDiscontinued() {
 		return discontinued;
 	}
 
-	public void setDiscontinued(Integer discontinued) {
+	public void setDiscontinued(Boolean discontinued) {
 		this.discontinued = discontinued;
 	}
 
@@ -148,19 +149,19 @@ public class Product {
 		this.category = category;
 	}
 
-	public double getStandard_cost() {
+	public BigDecimal getStandard_cost() {
 		return standard_cost;
 	}
 
-	public void setStandard_cost(double standard_cost) {
+	public void setStandard_cost(BigDecimal standard_cost) {
 		this.standard_cost = standard_cost;
 	}
 
-	public double getList_price() {
+	public BigDecimal getList_price() {
 		return list_price;
 	}
 
-	public void setList_price(double list_price) {
+	public void setList_price(BigDecimal list_price) {
 		this.list_price = list_price;
 	}
 
