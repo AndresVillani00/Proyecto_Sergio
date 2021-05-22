@@ -171,8 +171,7 @@ public class OrderDetailsModel {
 		+ "`quantity` , "
 		+ "`unit_price`,"
 		+ "`discount`, "
-		+ "`date_allocated`, "
-		+ "`attachments` " 
+		+ "`date_allocated` " 
 		+ "FROM order_details ";
 
 	try {

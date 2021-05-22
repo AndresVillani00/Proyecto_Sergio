@@ -22,6 +22,7 @@ import javax.json.bind.annotation.JsonbPropertyOrder;
                      "countryRegion", 
                      "countryRegion", 
                      "notes"})
+
 public class Customer {
 	private Integer id;
 	private String company;

@@ -28,7 +28,7 @@ public class OrdersModel {
 	Statement sentencia = null;
 
 	String sql = "SELECT `id`, `employee_id`, `customer_id`, `shipper_id`, "
-		+ "`tax_status_id`, `status_id`, `order_date` , `shipped_date`,"
+		+ "`tax_status_id`, `status_id`, `order_date` , `shipped_date`, "
 		+ "`paid_date`, `ship_name`, `ship_address`, `ship_city`, `ship_state_province`, "
 		+ "`ship_zip_postal_code`, `ship_country_region`, `payment_type`, `notes`, `shipping_fee`, `taxes`, `tax_rate` "
 		+ "FROM orders " + "WHERE id = " + id;
@@ -76,16 +76,16 @@ public class OrdersModel {
     public Integer insert(Order ordenes) throws  SQLException {
 	Integer id = null;
 	PreparedStatement ps = null;
-	String sql = "INSERT INTO orders ( "
-		+ "`id`, `employee_id`, `customer_id`, `shipper_id`, "
-		+ "`tax_status_id`, `status_id`, `order_date` , `shipped_date`,"
-		+ "`paid_date`, `ship_name`, `ship_address`, `ship_city`, `ship_state_province`, "
-		+ "`ship_zip_postal_code`, `ship_country_region`, `payment_type`, `notes`, `shipping_fee`, `taxes`, `tax_rate` "
-		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+	String sql = "INSERT INTO orders ("
+		+ "`employee_id`, `customer_id`, `order_date`, `shipped_date`, `shipper_id`, "
+		+ "`ship_name`, `ship_address`, `ship_city`, `ship_state_province`, "
+		+ "`ship_zip_postal_code`, `ship_country_region`, `shipping_fee`, `taxes`, "
+		+ "`payment_type`, `paid_date`, `notes`, `tax_rate` `tax_status_id`, `status_id`) "
+		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
 	try {
 	    ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		ps.setInt(1, ordenes.getEmployee_id());
+	    ps.setInt(1, ordenes.getEmployee_id());
 		ps.setInt(2, ordenes.getCustomer_id());
 		ps.setInt(3, ordenes.getShipper_id());
 		ps.setBoolean(4, ordenes.getTax_status_id());
@@ -104,7 +104,7 @@ public class OrdersModel {
 		ps.setBigDecimal(17, ordenes.getShipping_fee());
 		ps.setBigDecimal(18, ordenes.getTaxes());
 		ps.setDouble(19, ordenes.getTax_rate());
-	    
+		
 	    if (ps.executeUpdate() > 0) {
 		ResultSet rs = ps.getGeneratedKeys();
 		if (rs.next()) {
@@ -187,7 +187,7 @@ public class OrdersModel {
 		ps.setBigDecimal(17, ordenes.getShipping_fee());
 		ps.setBigDecimal(18, ordenes.getTaxes());
 		ps.setDouble(19, ordenes.getTax_rate());
-	    ps.setInt(20, ordenes.getId());
+	  
 
 	    resultado = (ps.executeUpdate() > 0);
 
