@@ -1,28 +1,12 @@
 package com.ejemplo.Rest_AndresVillani_DanielGil.Entities;
 
-
 import java.sql.Blob;
 
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"id", 
-    		     "firstName", 
-    		     "lastName", 
-    		     "company", 
-                     "emailAddress", 
-                     "businessPhone", 
-                     "mobilePhone", 
-                     "jobTitle", 
-                     "homePhone", 
-                     "faxNumber", 
-                     "address", 
-                     "city", 
-                     "zipPostalCode", 
-                     "stateProvince", 
-                     "countryRegion", 
-                     "countryRegion", 
-                     "notes"})
-
+@JsonbPropertyOrder({ "id", "firstName", "lastName", "company", "emailAddress", "businessPhone", "mobilePhone",
+		"jobTitle", "homePhone", "faxNumber", "address", "city", "zipPostalCode", "stateProvince", "countryRegion",
+		"countryRegion", "notes" })
 public class Customer {
 	private Integer id;
 	private String company;
@@ -42,9 +26,7 @@ public class Customer {
 	private String webPage;
 	private String notes;
 	private Blob attachment;
-	
-	
-	
+
 	public Customer() {
 
 	}
@@ -231,6 +213,3 @@ public class Customer {
 	}
 
 }
-
-
-
