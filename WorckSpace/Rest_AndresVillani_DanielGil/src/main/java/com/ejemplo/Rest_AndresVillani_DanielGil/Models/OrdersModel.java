@@ -27,37 +27,53 @@ public class OrdersModel {
     Order ordenes = null;
 	Statement sentencia = null;
 
-	String sql = "SELECT `id`, `employee_id`, `customer_id`, `shipper_id`, "
-		+ "`tax_status_id`, `status_id`, `order_date` , `shipped_date`, "
-		+ "`paid_date`, `ship_name`, `ship_address`, `ship_city`, `ship_state_province`, "
-		+ "`ship_zip_postal_code`, `ship_country_region`, `payment_type`, `notes`, `shipping_fee`, `taxes`, `tax_rate` "
-		+ "FROM orders " + "WHERE id = " + id;
-
+	String sql = "SELECT `id`, "
+			+ "`employee_id`, "
+			+ "`customer_id`, "
+			+ "`order_date`, "
+			+ "`shipped_date`, "
+			+ "`shipper_id`, "
+			+ "`ship_name`, "
+			+ "`ship_address`, "
+			+ "`ship_city`, "
+			+ "`ship_state_province`, "
+			+ "`ship_zip_postal_code`, "
+			+ "`ship_country_region`, "
+			+ "`shipping_fee`, "
+			+ "`taxes`, "
+			+ "`payment_type`, "
+			+ "`paid_date`, "
+			+ "`notes`, "
+			+ "`tax_rate`, "
+			+ "`tax_status_id`, "
+			+ "`status_id`"
+			+ " FROM orders WHERE id=" + id;
+	
 	try {
 	    sentencia = conexion.createStatement();
 	    ResultSet rs = sentencia.executeQuery(sql);
 	    while (rs.next()) { 
 	    	ordenes = new Order(
-			rs.getInt("id"),
-			rs.getInt("employee_id"),
-			rs.getInt("customer_id"),
-			rs.getInt("shipper_id"),
-			rs.getBoolean("tax_status_id"),
-			rs.getBoolean("status_id"),
-			rs.getDate("order_date"),
-			rs.getDate("shipped_date"),
-			rs.getDate("paid_date"),
-			rs.getString("ship_name"),
-			rs.getString("ship_address"),
-			rs.getString("ship_city"),
-			rs.getString("ship_state_province"),
-			rs.getString("ship_zip_postal_code"),
-			rs.getString("ship_country_region"),
-			rs.getString("payment_type"),
-			rs.getString("notes"),
-			rs.getBigDecimal("shipping_fee"),
-			rs.getBigDecimal("taxes"),
-			rs.getDouble("tax_rate"));
+	    			rs.getInt("id"),
+	    			rs.getInt("employee_id"),
+	    			rs.getInt("customer_id"),
+	    			rs.getDate("order_date"),
+	    			rs.getDate("shipped_date"),
+	    			rs.getInt("shipper_id"),
+	    			rs.getString("ship_name"),
+	    			rs.getString("ship_address"),
+	    			rs.getString("ship_city"),
+	    			rs.getString("ship_state_province"),
+	    			rs.getString("ship_zip_postal_code"),
+	    			rs.getString("ship_country_region"),
+	    			rs.getBigDecimal("shipping_fee"),
+	    			rs.getBigDecimal("taxes"),
+	    			rs.getString("payment_type"),
+	    			rs.getDate("paid_date"),
+	    			rs.getString("notes"),
+	    			rs.getDouble("tax_rate"),
+	    			rs.getBoolean("tax_status_id"),
+	    			rs.getBoolean("status_id"));
 	    };
 	    
 	} catch (SQLException e) {
@@ -76,34 +92,35 @@ public class OrdersModel {
     public Integer insert(Order ordenes) throws  SQLException {
 	Integer id = null;
 	PreparedStatement ps = null;
-	String sql = "INSERT INTO orders ("
-		+ "`employee_id`, `customer_id`, `order_date`, `shipped_date`, `shipper_id`, "
-		+ "`ship_name`, `ship_address`, `ship_city`, `ship_state_province`, "
-		+ "`ship_zip_postal_code`, `ship_country_region`, `shipping_fee`, `taxes`, "
-		+ "`payment_type`, `paid_date`, `notes`, `tax_rate` `tax_status_id`, `status_id`) "
-		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
+	String sql = "INSERT INTO orders ("+ "`employee_id`, "
+			+ "`customer_id`, "+ "`order_date`, "+ "`shipped_date`, "
+			+ "`shipper_id`, "+ "`ship_name`, "+ "`ship_address`, "
+			+ "`ship_city`, "+ "`ship_state_province`, "+ "`ship_zip_postal_code`, "
+			+ "`ship_country_region`, "+ "`shipping_fee`, "+ "`taxes`, "
+			+ "`payment_type`, "+ "`paid_date`, "+ "`notes`, "
+			+ "`tax_rate`, "+ "`tax_status_id`, "+ "`status_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 	try {
 	    ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	    ps.setInt(1, ordenes.getEmployee_id());
 		ps.setInt(2, ordenes.getCustomer_id());
-		ps.setInt(3, ordenes.getShipper_id());
-		ps.setBoolean(4, ordenes.getTax_status_id());
-		ps.setBoolean(5, ordenes.getStatus_id());
-		ps.setDate(6, ordenes.getOrder_date());
+		ps.setDate(3, ordenes.getOrder_date());
+		ps.setDate(4, ordenes.getShipped_date());
+		ps.setInt(5, ordenes.getShipper_id());
+		ps.setString(6, ordenes.getShip_name());
 		ps.setDate(7, ordenes.getShipped_date());
-		ps.setDate(8, ordenes.getPaid_date());
-		ps.setString(9, ordenes.getShip_name());
-		ps.setString(10, ordenes.getShip_address());
-		ps.setString(11, ordenes.getShip_city());
-		ps.setString(12, ordenes.getShip_state_province());
-		ps.setString(13, ordenes.getShip_zip_postal_code());
-		ps.setString(14, ordenes.getShip_country_region());
-		ps.setString(15, ordenes.getPayment_type());
+		ps.setString(8, ordenes.getShip_city());
+		ps.setString(9, ordenes.getShip_state_province());
+		ps.setString(10, ordenes.getShip_zip_postal_code());
+		ps.setString(11, ordenes.getShip_country_region());
+		ps.setBigDecimal(12, ordenes.getShipping_fee());
+		ps.setBigDecimal(13, ordenes.getTaxes());
+		ps.setString(14, ordenes.getPayment_type());
+		ps.setDate(15, ordenes.getPaid_date());
 		ps.setString(16, ordenes.getNotes());
-		ps.setBigDecimal(17, ordenes.getShipping_fee());
-		ps.setBigDecimal(18, ordenes.getTaxes());
-		ps.setDouble(19, ordenes.getTax_rate());
+		ps.setDouble(17, ordenes.getTax_rate());
+		ps.setBoolean(18, ordenes.getTax_status_id());
+		ps.setBoolean(19, ordenes.getStatus_id());
 		
 	    if (ps.executeUpdate() > 0) {
 		ResultSet rs = ps.getGeneratedKeys();
@@ -144,49 +161,40 @@ public class OrdersModel {
 	Boolean resultado = false;
 
 	PreparedStatement ps = null;
-	String sql = "UPDATE orders set "
-		+ "employee_id = ?, "
-		+ "customer_id = ?, "
-		+ "shipper_id = ?, "
-		+ "tax_status_id = ?, "
-		+ "status_id = ?, "
-		+ "order_date  = ?, "
-		+ "shipped_date = ?, "
-		+ "paid_date = ?, "
-		+ "ship_name = ?, "
-		+ "ship_address = ?, "
-		+ "ship_city = ?, "
-		+ "ship_state_province = ?, "
-		+ "ship_zip_postal_code = ?, "
-		+ "ship_country_region = ?, "
-		+ "payment_type = ?, "
-		+ "notes = ?, "
-		+ "shipping_fee = ?, "
-		+ "taxes = ?, "
-		+ "tax_rate = ? "
-		+ "where id = ?";
+	String sql = "UPDATE orders set "+"employee_id = ?, "
+			+"customer_id = ?, "+"order_date = ?, "
+			+"shipped_date = ?, "+"shipper_id = ?, "
+			+"ship_name = ?, "+"ship_address = ?, "
+			+"ship_city = ?, "+"ship_state_province = ?, "
+			+"ship_zip_postal_code = ?, "+"ship_country_region = ?, "
+			+"shipping_fee = ?, "+"taxes = ?, "
+			+"payment_type = ?, "+"paid_date = ?, "
+			+"notes = ?, "+"tax_rate = ?, "
+			+"tax_status_id = ?, "+"status_id = ? " 
+			+"WHERE id=?";
 	
 	try {
 	    ps = conexion.prepareStatement(sql);
 	    ps.setInt(1, ordenes.getEmployee_id());
 		ps.setInt(2, ordenes.getCustomer_id());
-		ps.setInt(3, ordenes.getShipper_id());
-		ps.setBoolean(4, ordenes.getTax_status_id());
-		ps.setBoolean(5, ordenes.getStatus_id());
-		ps.setDate(6, ordenes.getOrder_date());
+		ps.setDate(3, ordenes.getOrder_date());
+		ps.setDate(4, ordenes.getShipped_date());
+		ps.setInt(5, ordenes.getShipper_id());
+		ps.setString(6, ordenes.getShip_name());
 		ps.setDate(7, ordenes.getShipped_date());
-		ps.setDate(8, ordenes.getPaid_date());
-		ps.setString(9, ordenes.getShip_name());
-		ps.setString(10, ordenes.getShip_address());
-		ps.setString(11, ordenes.getShip_city());
-		ps.setString(12, ordenes.getShip_state_province());
-		ps.setString(13, ordenes.getShip_zip_postal_code());
-		ps.setString(14, ordenes.getShip_country_region());
-		ps.setString(15, ordenes.getPayment_type());
+		ps.setString(8, ordenes.getShip_city());
+		ps.setString(9, ordenes.getShip_state_province());
+		ps.setString(10, ordenes.getShip_zip_postal_code());
+		ps.setString(11, ordenes.getShip_country_region());
+		ps.setBigDecimal(12, ordenes.getShipping_fee());
+		ps.setBigDecimal(13, ordenes.getTaxes());
+		ps.setString(14, ordenes.getPayment_type());
+		ps.setDate(15, ordenes.getPaid_date());
 		ps.setString(16, ordenes.getNotes());
-		ps.setBigDecimal(17, ordenes.getShipping_fee());
-		ps.setBigDecimal(18, ordenes.getTaxes());
-		ps.setDouble(19, ordenes.getTax_rate());
+		ps.setDouble(17, ordenes.getTax_rate());
+		ps.setBoolean(18, ordenes.getTax_status_id());
+		ps.setBoolean(19, ordenes.getStatus_id());
+		ps.setInt(20, ordenes.getId());
 	  
 
 	    resultado = (ps.executeUpdate() > 0);
@@ -205,27 +213,13 @@ public class OrdersModel {
 	ArrayList<Order> ordenes = new ArrayList<Order>();
 	Statement sentencia = null;
 
-	String sql = "SELECT `id`, "
-		+ "employee_id = ?, "
-		+ "customer_id = ?, "
-		+ "shipper_id = ?, "
-		+ "tax_status_id = ?, "
-		+ "status_id = ?, "
-		+ "order_date  = ?, "
-		+ "shipped_date = ?, "
-		+ "paid_date = ?, "
-		+ "ship_name = ?, "
-		+ "ship_address = ?, "
-		+ "ship_city = ?, "
-		+ "ship_state_province = ?, "
-		+ "ship_zip_postal_code = ?, "
-		+ "ship_country_region = ?, "
-		+ "payment_type = ?, "
-		+ "notes = ?, "
-		+ "shipping_fee = ?, "
-		+ "taxes = ?, "
-		+ "tax_rate = ? " 
-		+ "FROM orders ";
+	String sql = "SELECT `id`, "+ "`employee_id`, "+ "`customer_id`, "
+			+ "`order_date`, "+ "`shipped_date`, "+ "`shipper_id`, "+ "`ship_name`, "
+			+ "`ship_address`, "+ "`ship_city`, "+ "`ship_state_province`, "+ "`ship_zip_postal_code`, "
+			+ "`ship_country_region`, "+ "`shipping_fee`, "+ "`taxes`, "
+			+ "`payment_type`, "+ "`paid_date`, "+ "`notes`, "+ "`tax_rate`, "
+			+ "`tax_status_id`, "+ "`status_id`"+ " FROM orders ";
+
 
 	try {
 	    if (filtro != null)
@@ -241,23 +235,23 @@ public class OrdersModel {
 				rs.getInt("id"),
 				rs.getInt("employee_id"),
 				rs.getInt("customer_id"),
-				rs.getInt("shipper_id"),
-				rs.getBoolean("tax_status_id"),
-				rs.getBoolean("status_id"),
 				rs.getDate("order_date"),
 				rs.getDate("shipped_date"),
-				rs.getDate("paid_date"),
+				rs.getInt("shipper_id"),
 				rs.getString("ship_name"),
 				rs.getString("ship_address"),
 				rs.getString("ship_city"),
 				rs.getString("ship_state_province"),
 				rs.getString("ship_zip_postal_code"),
 				rs.getString("ship_country_region"),
-				rs.getString("payment_type"),
-				rs.getString("notes"),
 				rs.getBigDecimal("shipping_fee"),
 				rs.getBigDecimal("taxes"),
-				rs.getDouble("tax_rate")));
+				rs.getString("payment_type"),
+				rs.getDate("paid_date"),
+				rs.getString("notes"),
+				rs.getDouble("tax_rate"),
+				rs.getBoolean("tax_status_id"),
+				rs.getBoolean("status_id")));
 	    };
 	} catch (SQLException e) {
 	    System.err.println("Error en read de las Ordenes: " + e.getMessage());

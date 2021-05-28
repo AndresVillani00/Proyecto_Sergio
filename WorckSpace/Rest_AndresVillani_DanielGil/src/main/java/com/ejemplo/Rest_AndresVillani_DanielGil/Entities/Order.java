@@ -5,78 +5,79 @@ import java.sql.Date;
 
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"id", 
-    		     "employee_id", 
-    		     "customer_id", 
-    		     "shipper_id", 
-                     "tax_status_id", 
-                     "status_id", 
-                     "order_date", 
-                     "shipped_date", 
-                     "paid_date", 
-                     "ship_name", 
-                     "ship_address", 
-                     "ship_city", 
-                     "ship_state_province", 
-                     "ship_zip_postal_code", 
-                     "ship_country_region", 
-                     "payment_type", 
-                     "notes", 
-                     "shipping_fee", 
-                     "taxes", 
-                     "tax_rate"})
+@JsonbPropertyOrder({"id",
+	"employee_id",
+	"customer_id",
+	"order_date",
+	"shipped_date",
+	"shipper_id",
+	"ship_name",
+	"ship_address",
+	"ship_city",
+	"ship_state_province",
+	"ship_zip_postal_code",
+	"ship_country_region",
+	"shipping_fee",
+	"taxes",
+	"payment_type",
+	"paid_date",
+	"notes",
+	"tax_rate",
+	"tax_status_id",
+	"status_id" })
 
 public class Order {
 	private Integer id;
 	private Integer employee_id;
 	private Integer customer_id;
-	private Integer shipper_id;
-	private Boolean tax_status_id;
-	private Boolean status_id;
 	private Date order_date;
 	private Date shipped_date;
-	private Date paid_date;
+	private Integer shipper_id;
 	private String ship_name;
 	private String ship_address;
 	private String ship_city;
 	private String ship_state_province;
 	private String ship_zip_postal_code;
 	private String ship_country_region;
-	private String payment_type;
-	private String notes;
 	private BigDecimal shipping_fee;
 	private BigDecimal taxes;
-	private double tax_rate;
+	private String payment_type;
+	private Date paid_date;
+	private String notes;
+	private Double tax_rate;
+	private Boolean tax_status_id;
+	private Boolean status_id;
 
 	
 	public Order() {
 
 	}
 
-	public Order(Integer id, Integer employee_id, Integer customer_id, Integer shipper_id, Boolean tax_status_id, Boolean status_id,
-			Date order_date, Date shipped_date, Date paid_date, String ship_name, String ship_address, String ship_city, String ship_state_province,
-			String ship_zip_postal_code, String ship_country_region, String payment_type, String notes, BigDecimal shipping_fee, BigDecimal taxes, double tax_rate) {
+	public Order (Integer id, Integer employee_id,Integer customer_id,Date order_date, Date shipped_date,
+			Integer shipper_id,String ship_name,String ship_address, String ship_city,String ship_state_province,
+			String ship_zip_postal_code,String ship_country_region,BigDecimal shipping_fee,BigDecimal taxes,String payment_type,
+			Date paid_date,String notes,Double tax_rate,Boolean tax_status_id, Boolean status_id)  {
 
-		this.id = id; 
-		this.employee_id = employee_id; 
-		this.customer_id = customer_id; 
-		this.shipper_id = shipper_id; 
-		this.tax_status_id = tax_status_id; 
-		this.status_id = status_id;
-		this.order_date = order_date; 
-		this.shipped_date = shipped_date; 
-		this.paid_date = paid_date;
-		this.ship_name = ship_name; 
-		this.ship_address = ship_address; 
+		this.id = id;
+		this.employee_id = employee_id;
+		this.customer_id = customer_id;
+		this.order_date = order_date;
+		this.shipped_date = shipped_date;
+		this.shipper_id = shipper_id;
+		this.ship_name = ship_name;
+		this.ship_address = ship_address;
 		this.ship_city = ship_city;
 		this.ship_state_province = ship_state_province;
-		this.ship_zip_postal_code = ship_zip_postal_code; 
-		this.ship_country_region = ship_country_region; 
-		this.payment_type = payment_type;
-		this.notes = notes;
+		this.ship_zip_postal_code = ship_zip_postal_code;
+		this.ship_country_region = ship_country_region;
 		this.shipping_fee = shipping_fee;
 		this.taxes = taxes;
+		this.payment_type = payment_type;
+		this.paid_date = paid_date;
+		this.notes = notes;
 		this.tax_rate = tax_rate;
+		this.tax_status_id = tax_status_id;
+		this.status_id = status_id;
 	}
 
 	public Integer getId() {
