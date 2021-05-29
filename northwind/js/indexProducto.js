@@ -1,11 +1,15 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/productos";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/productos/detalles";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 const modalWait = new bootstrap.Modal(document.getElementById("idModalWait")); // Para los mensajes de error y avisos
 
 window.onload = init;
 
 function init() {
-  const peticionHTTP = fetch(URL);
+  const queryStr = window.location.search.substring(1);
+  const parametro = queryStr.split("=");
+  idproductos = parametro[1];  
+  console.log("Estoy en orden ", parametro[1], " ", idproductos)
+  const peticionHTTP = fetch(URL + "/" + idproductos);
 
   peticionHTTP
     .then((respuesta) => {
@@ -13,109 +17,39 @@ function init() {
         return respuesta.json();
       } else throw new Error("Return not ok");
     })
-    .then((ordenes) => {
-      let tblBody = document.getElementById("id_tblPedidos");
-      for (const orders of ordenes) {
+    .then((productos) => {
+      let tblBody = document.getElementById("id_tblProductos");
+      for (const products of productos) {
         let fila = document.createElement("tr");
         let elemento = document.createElement("td");
-        elemento.innerHTML = orders.id;
+        elemento.innerHTML = products.id;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = orders.ship_address;
+        elemento.innerHTML = products.product_name;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = orders.order_date;
+        elemento.innerHTML = products.product_code;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = orders.paid_date;
+        elemento.innerHTML = products.quantity_per_unit;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = orders.payment_type;
-        fila.appendChild(elemento);
-        elemento = document.createElement("td");
-        elemento.innerHTML = orders.ship_zip_postal_code;
-        fila.appendChild(elemento);
-        elemento = document.createElement("td");
-        elemento.innerHTML =
-          `<button class="btn btn-link" onclick="editaPedido(${orders.id})"><i class="bi-pencil"></i></button>` +
-          `<button style="color:red;" class="btn btn-link"  onclick="borrarPedido(${orders.id})"><i class="bi-x-circle"></i></button>` + 
-          `<button style="color:#20c997"; class="btn btn-link" onclick="indexProducto(${orders.id})"><i class="bi bi-box"></i></button>`;
+        elemento.innerHTML = products.standard_cost + ` €`;
         fila.appendChild(elemento);
 
         tblBody.appendChild(fila);
       }
 
-      // Todo ha ido bien hast aquí, habilito el boton de añadir pedido
-
-      document.getElementById("idAddPedido").addEventListener("click", addPedido);
+  
     })
     .catch((error) => {
-      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los Pedidos!<br>" + error, false, "error");
+      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los productos!<br>" + error, false, "error");
     });
-}
 
-function editaPedido(idpedidos) {
-  window.location.href = `editarPedido.html?idpedidos=${idpedidos}`;
-}
-
-function addPedido() {
-  window.location.href = "editarPedido.html";
 }
 
 function indexProducto() {
   window.location.href = "indexProducto.html";
-}
-
-function borrarPedido(idpedidos) {
-  muestraMsg(
-    "¡Atención!",
-    `¿Estas seguró de querer borrar el pedido ${idpedidos}?`,
-    true,
-    "question",
-    "Adelante con los faroles!",
-    "Naaa, era broma..."
-  );
-  document.getElementById("idMdlOK").addEventListener("click", () => {
-    
-    borrarPedidoAPI(idpedidos);
-  });
-}
-
-function borrarPedidoAPI(idpedidos) {
-  myModal.hide();
-  modalWait.show();
-  opciones = {
-    method: "DELETE", // Modificamos la BBDD
-  };
-
-  fetch(URL + "/" + idpedidos, opciones)
-    .then((respuesta) => {
-      if (respuesta.ok) {
-        return respuesta.json();
-      } else 
-      {
-        throw new Error(`Fallo al borrar, el servidor responde con ${respuesta.status}-${respuesta.statusText}`);
-      }
-        
-    })
-    .then((respuesta) => {
-      modalWait.hide();
-      muestraMsg(`¡Pedido ${idpedidos} Borrado!`, "¡A tomar por saco!", false, "success");
-      document.getElementById('idMdlClose').addEventListener("click", () => {
-        location.reload();
-        document.getElementById('idMdlClose').removeEventListener("click");
-      })
-      
-    })
-    .catch((error) => {
-      modalWait.hide();
-      muestraMsg(
-        "Pedido NO borrado",
-        "¿Es posible que este pedido lo tenga algun cliente? 🤔<br>" + error,
-        false,
-        "error"
-      );
-    });
 }
 
 /**

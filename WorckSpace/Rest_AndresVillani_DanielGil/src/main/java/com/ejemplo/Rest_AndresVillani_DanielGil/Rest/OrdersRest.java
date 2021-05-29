@@ -37,7 +37,6 @@ public class OrdersRest {
 	                 @QueryParam("limit") Integer limit, 
 	                 @QueryParam("offset") Integer offset) {
 	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
-	
 	if (orders != null) {
 	    ArrayList<Order> listaOrdenes = orders.lista(filter, limit, offset);
 	    if (listaOrdenes != null) {
@@ -49,7 +48,7 @@ public class OrdersRest {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/editar/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response read(@PathParam("id") Integer id) {
 	
@@ -60,6 +59,23 @@ public class OrdersRest {
 	    if (ordenes != null) {
 		respuesta = Response.status(Response.Status.OK).entity(ordenes).build();
 	    }
+	}
+	return respuesta;
+    }
+    
+    @GET
+    @Path("/cliente/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listCustomer(@PathParam("id") Integer id, 
+	                 @QueryParam("limit") Integer limit, 
+	                 @QueryParam("offset") Integer offset) {
+	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
+	if (orders != null) {
+	    ArrayList<Order> listaOrdenes = orders.listaCustomer(id, limit, offset);
+	    if (listaOrdenes != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaOrdenes).build();
+	    }
+
 	}
 	return respuesta;
     }

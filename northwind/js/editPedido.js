@@ -1,4 +1,5 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes/editar";
+const URL2 = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 
 window.onload = init;
@@ -10,6 +11,7 @@ function init() {
     idpedidos = parametro[1];
 
     rellenaPedido(idpedidos);
+    console.log("PedidoID:   ", idpedidos)
   } else {
     document.getElementById("idId").value = "Nuevo Pedido";
     document.getElementById("idSalvar").disabled = false;
@@ -46,6 +48,9 @@ function rellenaPedido(idpedidos) {
 }
 
 function salvarPedido(evt) {
+  console.log("Pedido", idpedidos)
+  const peticionHTTP2 = fetch(URL2);
+
   evt.preventDefault();
 
   // Creo un array con todo los datos formulario
@@ -75,9 +80,11 @@ function salvarPedido(evt) {
       },
     };
   }
-
-  fetch(URL, opciones)
+  console.log("Antes Fetch")
+  fetch(URL2, opciones)
+  peticionHTTP2
     .then((respuesta) => {
+      console.log("Estoy en fetch")
       if (respuesta.ok) {
         return respuesta.json();
       } else throw new Error("Fallo al actualizar: " + respuesta);

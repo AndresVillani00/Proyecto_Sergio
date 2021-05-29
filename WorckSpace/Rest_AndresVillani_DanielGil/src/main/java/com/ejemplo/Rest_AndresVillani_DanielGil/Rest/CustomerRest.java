@@ -87,6 +87,7 @@ public class CustomerRest {
 	Boolean clienteactualizado;
 	Response response;
 	try {
+		System.out.println("Voy a actualizar cliente "+cliente);
 	    clienteactualizado = customers.update(cliente);
 	    response = Response.status(Response.Status.OK).entity(clienteactualizado).build();
 	} catch (Exception e) {

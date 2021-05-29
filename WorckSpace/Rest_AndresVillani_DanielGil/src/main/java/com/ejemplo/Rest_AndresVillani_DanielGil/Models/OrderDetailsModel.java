@@ -203,5 +203,52 @@ public class OrderDetailsModel {
 
 	return ordersDetails;
     }
+    
+    public ArrayList<OrderDetail> listaOrders(Integer order_id, Integer limite, Integer offset)
+
+    {
+	ArrayList<OrderDetail> ordersDetails = new ArrayList<OrderDetail>();
+	Statement sentencia = null;
+
+	String sql = "SELECT `id`, "
+		+ "`order_id`, "
+		+ "`product_id`, "
+		+ "`status_id`, "
+		+ "`purchase_order_id`, "
+		+ "`inventory_id`, "
+		+ "`quantity` , "
+		+ "`unit_price`,"
+		+ "`discount`, "
+		+ "`date_allocated` " 
+		+ "FROM order_details ";
+	try {
+	    if (order_id != null)
+		sql += " WHERE order_id =" + order_id;
+	    if (limite != null)
+		sql += " LIMIT " + limite;
+	    if (offset != null)
+		sql += " OFFSET " + offset;
+	    sentencia = conexion.createStatement();
+	    ResultSet rs = sentencia.executeQuery(sql);
+	    while (rs.next()) { 
+	    ordersDetails.add(new OrderDetail(
+	    		rs.getInt("id"),
+				rs.getInt("order_id"),
+				rs.getInt("product_id"),
+				rs.getInt("status_id"),
+				rs.getInt("purchase_order_id"),
+				rs.getInt("inventory_id"),
+				rs.getBigDecimal("quantity"),
+				rs.getBigDecimal("unit_price"),
+				rs.getDouble("discount"),
+				rs.getDate("date_allocated")));
+	    };
+	} catch (SQLException e) {
+	    System.err.println("Error en read de los detalles de las Ordenes: " + e.getMessage());
+	    return null;
+	}
+
+	return ordersDetails;
+    }
 
 }

@@ -49,7 +49,7 @@ public class OrderDetailRest {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/editar/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response read(@PathParam("id") Integer id) {
 	
@@ -60,6 +60,24 @@ public class OrderDetailRest {
 	    if (DetallesPedido != null) {
 		respuesta = Response.status(Response.Status.OK).entity(DetallesPedido).build();
 	    }
+	}
+	return respuesta;
+    }
+    
+    @GET
+    @Path("/pedido/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listOrders(@PathParam("id") Integer id, 
+	                 @QueryParam("limit") Integer limit, 
+	                 @QueryParam("offset") Integer offset) {
+	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
+	
+	if (OrdersDetails != null) {
+	    ArrayList<OrderDetail> listaDetallesPedidos = OrdersDetails.listaOrders(id, limit, offset);
+	    if (listaDetallesPedidos != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaDetallesPedidos).build();
+	    }
+
 	}
 	return respuesta;
     }

@@ -1,11 +1,14 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes/cliente";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 const modalWait = new bootstrap.Modal(document.getElementById("idModalWait")); // Para los mensajes de error y avisos
 
 window.onload = init;
 
 function init() {
-  const peticionHTTP = fetch(URL);
+  const queryStr = window.location.search.substring(1);
+  const parametro = queryStr.split("=");
+  idpedidos = parametro[1];
+  const peticionHTTP = fetch(URL + "/" + idpedidos);
 
   peticionHTTP
     .then((respuesta) => {
@@ -42,12 +45,11 @@ function init() {
         elemento.innerHTML =
           `<button class="btn btn-link" onclick="editaPedido(${orders.id})"><i class="bi-pencil"></i></button>` +
           `<button style="color:red;" class="btn btn-link"  onclick="borrarPedido(${orders.id})"><i class="bi-x-circle"></i></button>` + 
-          `<button style="color:#20c997"; class="btn btn-link" onclick="indexProducto(${orders.id})"><i class="bi bi-box"></i></button>`;
+          `<button style="color:#20c997"; class="btn btn-link" onclick="indexDetalles(${orders.id})"><i class="bi bi-box"></i></button>`;
         fila.appendChild(elemento);
 
         tblBody.appendChild(fila);
       }
-
       // Todo ha ido bien hast aquí, habilito el boton de añadir pedido
 
       document.getElementById("idAddPedido").addEventListener("click", addPedido);
@@ -65,8 +67,8 @@ function addPedido() {
   window.location.href = "editarPedido.html";
 }
 
-function indexProducto() {
-  window.location.href = "indexProducto.html";
+function indexDetalles(idpedidos) {
+  window.location.href = `indexDetalles.html?idpedidos=${idpedidos}`;
 }
 
 function borrarPedido(idpedidos) {

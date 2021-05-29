@@ -63,6 +63,24 @@ public class ProductsRest {
 	}
 	return respuesta;
     }
+    
+    @GET
+    @Path("/detalles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listDetails(@PathParam("id") Integer id, 
+	                 @QueryParam("limit") Integer limit, 
+	                 @QueryParam("offset") Integer offset) {
+	Response respuesta = Response.status(Response.Status.NOT_FOUND).build();
+	
+	if (products != null) {
+	    ArrayList<Product> listaProductos = products.listaDetails(id, limit, offset);
+	    if (listaProductos != null) {
+		respuesta = Response.status(Response.Status.OK).entity(listaProductos).build();
+	    }
+
+	}
+	return respuesta;
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

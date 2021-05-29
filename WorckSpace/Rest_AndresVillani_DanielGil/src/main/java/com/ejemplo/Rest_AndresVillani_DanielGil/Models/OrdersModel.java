@@ -83,6 +83,7 @@ public class OrdersModel {
 
 	return ordenes;
     }
+    
 
     /**
      * 
@@ -141,7 +142,7 @@ public class OrdersModel {
 	Boolean resultado = false;
 
 	PreparedStatement ps = null;
-	String sql = "DELETE FROM orders where id = ?";
+	String sql = "DELETE FROM orders where customer_id = ?";
 	try {
 	    ps = conexion.prepareStatement(sql);
 
@@ -161,16 +162,26 @@ public class OrdersModel {
 	Boolean resultado = false;
 
 	PreparedStatement ps = null;
-	String sql = "UPDATE orders set "+"employee_id = ?, "
-			+"customer_id = ?, "+"order_date = ?, "
-			+"shipped_date = ?, "+"shipper_id = ?, "
-			+"ship_name = ?, "+"ship_address = ?, "
-			+"ship_city = ?, "+"ship_state_province = ?, "
-			+"ship_zip_postal_code = ?, "+"ship_country_region = ?, "
-			+"shipping_fee = ?, "+"taxes = ?, "
-			+"payment_type = ?, "+"paid_date = ?, "
-			+"notes = ?, "+"tax_rate = ?, "
-			+"tax_status_id = ?, "+"status_id = ? " 
+	String sql = "UPDATE orders set "
+			+"employee_id = ?, "
+			+"customer_id = ?, "
+			+"order_date = ?, "
+			+"shipped_date = ?, "
+			+"shipper_id = ?, "
+			+"ship_name = ?, "
+			+"ship_address = ?, "
+			+"ship_city = ?, "
+			+"ship_state_province = ?, "
+			+"ship_zip_postal_code = ?, "
+			+"ship_country_region = ?, "
+			+"shipping_fee = ?, "
+			+"taxes = ?, "
+			+"payment_type = ?, "
+			+"paid_date = ?, "
+			+"notes = ?, "
+			+"tax_rate = ?, "
+			+"tax_status_id = ?, "
+			+"status_id = ? " 
 			+"WHERE id=?";
 	
 	try {
@@ -224,6 +235,60 @@ public class OrdersModel {
 	try {
 	    if (filtro != null)
 		sql += " WHERE " + filtro;
+	    if (limite != null)
+		sql += " LIMIT " + limite;
+	    if (offset != null)
+		sql += " OFFSET " + offset;
+	    sentencia = conexion.createStatement();
+	    ResultSet rs = sentencia.executeQuery(sql);
+	    while (rs.next()) {
+		ordenes.add(new Order(
+				rs.getInt("id"),
+				rs.getInt("employee_id"),
+				rs.getInt("customer_id"),
+				rs.getDate("order_date"),
+				rs.getDate("shipped_date"),
+				rs.getInt("shipper_id"),
+				rs.getString("ship_name"),
+				rs.getString("ship_address"),
+				rs.getString("ship_city"),
+				rs.getString("ship_state_province"),
+				rs.getString("ship_zip_postal_code"),
+				rs.getString("ship_country_region"),
+				rs.getBigDecimal("shipping_fee"),
+				rs.getBigDecimal("taxes"),
+				rs.getString("payment_type"),
+				rs.getDate("paid_date"),
+				rs.getString("notes"),
+				rs.getDouble("tax_rate"),
+				rs.getBoolean("tax_status_id"),
+				rs.getBoolean("status_id")));
+	    };
+	} catch (SQLException e) {
+	    System.err.println("Error en read de las Ordenes: " + e.getMessage());
+	    return null;
+	}
+
+	return ordenes;
+    }
+    
+    public ArrayList<Order> listaCustomer(Integer customer_id, Integer limite, Integer offset)
+
+    {
+	ArrayList<Order> ordenes = new ArrayList<Order>();
+	Statement sentencia = null;
+
+	String sql = "SELECT `id`, "+ "`employee_id`, "+ "`customer_id`, "
+			+ "`order_date`, "+ "`shipped_date`, "+ "`shipper_id`, "+ "`ship_name`, "
+			+ "`ship_address`, "+ "`ship_city`, "+ "`ship_state_province`, "+ "`ship_zip_postal_code`, "
+			+ "`ship_country_region`, "+ "`shipping_fee`, "+ "`taxes`, "
+			+ "`payment_type`, "+ "`paid_date`, "+ "`notes`, "+ "`tax_rate`, "
+			+ "`tax_status_id`, "+ "`status_id`"+ " FROM orders ";
+
+
+	try {
+	    if (customer_id != null)
+		sql += " WHERE customer_id =" + customer_id;
 	    if (limite != null)
 		sql += " LIMIT " + limite;
 	    if (offset != null)

@@ -1,4 +1,5 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/productos";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/DetallesPedidos/editar";
+const URL2 = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/DetallesPedidos";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 
 window.onload = init;
@@ -7,11 +8,12 @@ function init() {
   if (window.location.search != "") {
     const queryStr = window.location.search.substring(1);
     const parametro = queryStr.split("=");
-    idproducto = parametro[1];
+    iddetalles = parametro[1];
 
-    rellenaProducto(idproducto);
+    rellenaPedido(iddetalles);
+    console.log("PedidoID:   ", iddetalles)
   } else {
-    document.getElementById("idId").value = "Nuevo Producto";
+    document.getElementById("idId").value = "Nuevo Pedido";
     document.getElementById("idSalvar").disabled = false;
   }
 
@@ -21,11 +23,11 @@ function init() {
     volver();
   });
 
-  document.getElementById("idFormProducto").addEventListener("submit", salvarPedido);
+  document.getElementById("idFormDetalles").addEventListener("submit", salvarPedido);
 }
 
-function rellenaPedido(idpedidos) {
-  const peticionHTTP = fetch(URL + "/" + idpedidos);
+function rellenaPedido(iddetalles) {
+  const peticionHTTP = fetch(URL + "/" + iddetalles);
 
   peticionHTTP
     .then((respuesta) => {
@@ -41,11 +43,14 @@ function rellenaPedido(idpedidos) {
       document.getElementById("idSalvar").disabled = false;
     })
     .catch((error) => {
-      muestraMsg("¡M**rd!", "No he podido recupera este  Pedido " + error, false);
+      muestraMsg("¡M**rd!", "No he podido recupera este Pedido " + error, false);
     });
 }
 
 function salvarPedido(evt) {
+  console.log("Pedido", iddetalles)
+  const peticionHTTP2 = fetch(URL2);
+
   evt.preventDefault();
 
   // Creo un array con todo los datos formulario
@@ -75,9 +80,11 @@ function salvarPedido(evt) {
       },
     };
   }
-
-  fetch(URL, opciones)
+  console.log("Antes Fetch")
+  fetch(URL2, opciones)
+  peticionHTTP2
     .then((respuesta) => {
+      console.log("Estoy en fetch")
       if (respuesta.ok) {
         return respuesta.json();
       } else throw new Error("Fallo al actualizar: " + respuesta);

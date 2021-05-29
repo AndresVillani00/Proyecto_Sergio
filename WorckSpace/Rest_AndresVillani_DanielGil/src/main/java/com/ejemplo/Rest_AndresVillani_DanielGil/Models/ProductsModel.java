@@ -227,5 +227,61 @@ public class ProductsModel {
 
 	return productos;
     }
+    
+    public ArrayList<Product> listaDetails(Integer id, Integer limite, Integer offset)
+
+    {
+	ArrayList<Product> productos = new ArrayList<Product>();
+	Statement sentencia = null;
+
+	String sql = "SELECT `id`, "
+		+ "`reorder_level`, "
+		+ "`target_level`, "
+		+ "`discontinued`, "
+		+ "`minimum_reorder_quantity`, "
+		+ "`supplier_ids`, "
+		+ "`product_code` , "
+		+ "`product_name`,"
+		+ "`description`, "
+		+ "`quantity_per_unit`, "
+		+ "`category`, "
+		+ "`standard_cost`, "
+		+ "`list_price`, "
+		+ "`attachments` " 
+		+ "FROM products ";
+
+	try {
+	    if (id != null)
+		sql += " WHERE id =" + id;
+	    if (limite != null)
+		sql += " LIMIT " + limite;
+	    if (offset != null)
+		sql += " OFFSET " + offset;
+	    sentencia = conexion.createStatement();
+	    ResultSet rs = sentencia.executeQuery(sql);
+	    while (rs.next()) { 
+	    productos.add(new Product(
+	    		rs.getInt("id"),
+				rs.getInt("reorder_level"),
+				rs.getInt("target_level"),
+				rs.getBoolean("discontinued"),
+				rs.getInt("minimum_reorder_quantity"),
+				rs.getString("supplier_ids"),
+				rs.getString("product_code"),
+				rs.getString("product_name"),
+				rs.getString("description"),
+				rs.getString("quantity_per_unit"),
+				rs.getString("category"),
+				rs.getBigDecimal("standard_cost"),
+				rs.getBigDecimal("list_price"),
+				rs.getBlob("attachments")));
+	    };
+	} catch (SQLException e) {
+	    System.err.println("Error en read de Productos: " + e.getMessage());
+	    return null;
+	}
+
+	return productos;
+    }
 
 }
