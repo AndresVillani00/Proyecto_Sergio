@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/DetallesPedidos/pedido";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 const modalWait = new bootstrap.Modal(document.getElementById("idModalWait")); // Para los mensajes de error y avisos
 
@@ -7,9 +7,8 @@ window.onload = init;
 function init() {
   const queryStr = window.location.search.substring(1);
   const parametro = queryStr.split("=");
-  iddetalles = parametro[1];  
-  console.log("Estoy en orden ", parametro[1], " ", iddetalles)
-  const peticionHTTP = fetch(URL + "/" + iddetalles);
+  idpedidos = parametro[1];
+  const peticionHTTP = fetch(URL);
 
   peticionHTTP
     .then((respuesta) => {
@@ -17,56 +16,62 @@ function init() {
         return respuesta.json();
       } else throw new Error("Return not ok");
     })
-    .then((detalles) => {
-      let tblBody = document.getElementById("id_tblDetalles");
-      for (const details of detalles) {
+    .then((ordenes) => {
+      let tblBody = document.getElementById("id_tblPedidos");
+      for (const orders of ordenes) {
         let fila = document.createElement("tr");
         let elemento = document.createElement("td");
-        //elemento = document.getElementById("producto");
-        elemento.innerHTML = details.order_id;
+        elemento.innerHTML = orders.id;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = details.product_id;
+        elemento.innerHTML = orders.ship_name;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = details.quantity;
+        elemento.innerHTML = orders.ship_address;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = details.unit_price + ` €`;
+        elemento.innerHTML = orders.order_date;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
-        elemento.innerHTML = details.discount + ` %`;
+        elemento.innerHTML = orders.paid_date;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = orders.payment_type;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = orders.ship_zip_postal_code;
         fila.appendChild(elemento);
         elemento = document.createElement("td");
         elemento.innerHTML =
-         `<button class="btn btn-link" onclick="editaDetalles(${details.id})"><i class="bi-pencil"></i></button>` +
-         `<button style="color:red;" class="btn btn-link"  onclick="borrarDetalle(${details.id})"><i class="bi-x-circle"></i></button>`+ 
-         `<button style="color:#20c997"; class="btn btn-link" onclick="indexProducto(${details.product_id})"><i class="bi bi-basket2"></i></button>`;
+          `<button class="btn btn-link" onclick="editaPedido(${orders.id})"><i class="bi-pencil"></i></button>` +
+          `<button style="color:red;" class="btn btn-link"  onclick="borrarPedido(${orders.id})"><i class="bi-x-circle"></i></button>`;
         fila.appendChild(elemento);
 
         tblBody.appendChild(fila);
       }
 
-  
     })
     .catch((error) => {
-      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los detalles!<br>" + error, false, "error");
+      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los Pedidos!<br>" + error, false, "error");
     });
-
 }
 
-function editaDetalles(iddetalles) {
-  window.location.href = `editarDetalles.html?iddetalles=${iddetalles}`;
+function editaPedido(idpedidos) {
+  window.location.href = `editarPedido.html?idpedidos=${idpedidos}`;
 }
 
-function indexProducto(iddetalles) {
-  window.location.href = `indexProducto.html?iddetalles=${iddetalles}`;
+function addPedido() {
+  window.location.href = "editarPedido.html";
 }
 
-function borrarDetalle(iddetalles) {
+function indexDetalles(idpedidos) {
+  window.location.href = `indexDetalles.html?idpedidos=${idpedidos}`;
+}
+
+function borrarPedido(idpedidos) {
   muestraMsg(
     "¡Atención!",
-    `¿Estas seguró de querer borrar el detalles ${iddetalles}?`,
+    `¿Estas seguró de querer borrar el pedido ${idpedidos}?`,
     true,
     "question",
     "Adelante con los faroles!",
@@ -74,18 +79,18 @@ function borrarDetalle(iddetalles) {
   );
   document.getElementById("idMdlOK").addEventListener("click", () => {
     
-    borrarDetalleAPI(iddetalles);
+    borrarPedidoAPI(idpedidos);
   });
 }
 
-function borrarDetalleAPI(iddetalles) {
+function borrarPedidoAPI(idpedidos) {
   myModal.hide();
   modalWait.show();
   opciones = {
     method: "DELETE", // Modificamos la BBDD
   };
 
-  fetch(URL + "/" + iddetalles, opciones)
+  fetch(URL + "/" + idpedidos, opciones)
     .then((respuesta) => {
       if (respuesta.ok) {
         return respuesta.json();
@@ -97,7 +102,7 @@ function borrarDetalleAPI(iddetalles) {
     })
     .then((respuesta) => {
       modalWait.hide();
-      muestraMsg(`¡detalles ${iddetalles} Borrado!`, "¡A tomar por saco!", false, "success");
+      muestraMsg(`¡Pedido ${idpedidos} Borrado!`, "¡A tomar por saco!", false, "success");
       document.getElementById('idMdlClose').addEventListener("click", () => {
         location.reload();
         document.getElementById('idMdlClose').removeEventListener("click");
@@ -107,8 +112,8 @@ function borrarDetalleAPI(iddetalles) {
     .catch((error) => {
       modalWait.hide();
       muestraMsg(
-        "detalles NO borrado",
-        "¿Es posible que este Detalle lo tenga algun cliente? 🤔<br>" + error,
+        "Pedido NO borrado",
+        "¿Es posible que este pedido lo tenga algun cliente? 🤔<br>" + error,
         false,
         "error"
       );

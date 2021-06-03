@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/productos/detalles";
+const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/productos";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
 const modalWait = new bootstrap.Modal(document.getElementById("idModalWait")); // Para los mensajes de error y avisos
 
@@ -9,7 +9,7 @@ function init() {
   const parametro = queryStr.split("=");
   idproductos = parametro[1];  
   console.log("Estoy en orden ", parametro[1], " ", idproductos)
-  const peticionHTTP = fetch(URL + "/" + idproductos);
+  const peticionHTTP = fetch(URL);
 
   peticionHTTP
     .then((respuesta) => {
@@ -36,6 +36,7 @@ function init() {
         elemento = document.createElement("td");
         elemento.innerHTML = products.standard_cost + ` €`;
         fila.appendChild(elemento);
+
 
         tblBody.appendChild(fila);
       }

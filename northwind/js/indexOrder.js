@@ -44,18 +44,15 @@ function init() {
         elemento = document.createElement("td");
         elemento.innerHTML =
           `<button class="btn btn-link" onclick="editaPedido(${orders.id})"><i class="bi-pencil"></i></button>` +
-          `<button style="color:red;" class="btn btn-link"  onclick="borrarPedido(${orders.id})"><i class="bi-x-circle"></i></button>` + 
-          `<button style="color:#20c997"; class="btn btn-link" onclick="indexDetalles(${orders.id})"><i class="bi bi-box"></i></button>`;
+          `<button style="color:red;" class="btn btn-link"  onclick="borrarPedido(${orders.id})"><i class="bi-x-circle"></i></button>`;
         fila.appendChild(elemento);
 
         tblBody.appendChild(fila);
       }
-      // Todo ha ido bien hast aquí, habilito el boton de añadir pedido
 
-      document.getElementById("idAddPedido").addEventListener("click", addPedido);
     })
     .catch((error) => {
-      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los Pedidos!<br>" + error, false, "error");
+      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de pedidos!<br>" + error, false, "error");
     });
 }
 

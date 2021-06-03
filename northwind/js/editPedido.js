@@ -1,6 +1,8 @@
 const URL = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes/editar";
 const URL2 = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/ordenes";
+const URL3 = "http://localhost:8080/Rest_AndresVillani_DanielGil/webapi/DetallesPedidos/pedido";
 const myModal = new bootstrap.Modal(document.getElementById("idModal")); // Para los mensajes de error y avisos
+const modalWait = new bootstrap.Modal(document.getElementById("idModalWait")); // Para los mensajes de error y avisos
 
 window.onload = init;
 
@@ -24,6 +26,58 @@ function init() {
   });
 
   document.getElementById("idFormPedido").addEventListener("submit", salvarPedido);
+
+  const queryStr = window.location.search.substring(1);
+  const parametro = queryStr.split("=");
+  iddetalles = parametro[1];  
+  console.log("Estoy en orden ", parametro[1], " ", iddetalles)
+  const peticionHTTP3 = fetch(URL3 + "/" + iddetalles);
+
+  peticionHTTP3
+    .then((respuesta) => {
+      if (respuesta.ok) {
+        return respuesta.json();
+      } else throw new Error("Return not ok");
+    })
+    .then((detalles) => {
+      let tblBody = document.getElementById("id_tblDetalles");
+      for (const details of detalles) {
+        let fila = document.createElement("tr");
+        let elemento = document.createElement("td");
+        elemento.innerHTML = details.order_id;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = details.product_id;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = `Nada`;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = `Nada`;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = details.quantity;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = details.unit_price + ` €`;
+        fila.appendChild(elemento);
+        elemento = document.createElement("td");
+        elemento.innerHTML = details.discount + ` %`;
+        fila.appendChild(elemento);
+
+        tblBody.appendChild(fila);
+      }
+
+  
+    })
+    .catch((error) => {
+      muestraMsg("¡M**rd!", "¡No he podido recuperar el listado de los detalles!<br>" + error, false, "error");
+    });
+
+}
+
+function editaDetalles(iddetalles) {
+  window.location.href = `editarDetalles.html?iddetalles=${iddetalles}`;
 }
 
 function rellenaPedido(idpedidos) {
@@ -101,6 +155,58 @@ function salvarPedido(evt) {
 
 function volver() {
   window.history.back();
+}
+
+function borrarDetalle(iddetalles) {
+  muestraMsg(
+    "¡Atención!",
+    `¿Estas seguró de querer borrar el detalles ${iddetalles}?`,
+    true,
+    "question",
+    "Adelante con los faroles!",
+    "Naaa, era broma..."
+  );
+  document.getElementById("idMdlOK").addEventListener("click", () => {
+    
+    borrarDetalleAPI(iddetalles);
+  });
+}
+
+function borrarDetalleAPI(iddetalles) {
+  myModal.hide();
+  modalWait.show();
+  opciones = {
+    method: "DELETE", // Modificamos la BBDD
+  };
+
+  fetch(URL3 + "/" + iddetalles, opciones)
+    .then((respuesta) => {
+      if (respuesta.ok) {
+        return respuesta.json();
+      } else 
+      {
+        throw new Error(`Fallo al borrar, el servidor responde con ${respuesta.status}-${respuesta.statusText}`);
+      }
+        
+    })
+    .then((respuesta) => {
+      modalWait.hide();
+      muestraMsg(`¡detalles ${iddetalles} Borrado!`, "¡A tomar por saco!", false, "success");
+      document.getElementById('idMdlClose').addEventListener("click", () => {
+        location.reload();
+        document.getElementById('idMdlClose').removeEventListener("click");
+      })
+      
+    })
+    .catch((error) => {
+      modalWait.hide();
+      muestraMsg(
+        "detalles NO borrado",
+        "¿Es posible que este Detalle lo tenga algun cliente? 🤔<br>" + error,
+        false,
+        "error"
+      );
+    });
 }
 
 /**
