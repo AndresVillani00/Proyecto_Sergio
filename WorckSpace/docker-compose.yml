@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  psp-db:
+    image: mysql:5.7
+    container_name: psp-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - psp-mysql:/var/lib/mysql/
+    ports:
+      - "3307:3306"
+  psp-tomcat:
+    image: tomcat:8-jdk8-adoptopenjdk-hotspot
+    container_name: psp-tomcat
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    links:
+      - psp-db
+volumes:
+    psp-mysql:

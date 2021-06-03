@@ -134,6 +134,7 @@ function salvarPedido(evt) {
       },
     };
   }
+  //creo que esta mal
   console.log("Antes Fetch")
   fetch(URL2, opciones)
   peticionHTTP2

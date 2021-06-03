@@ -186,26 +186,26 @@ public class OrdersModel {
 	
 	try {
 	    ps = conexion.prepareStatement(sql);
-	    ps.setInt(1, ordenes.getEmployee_id());
-		ps.setInt(2, ordenes.getCustomer_id());
-		ps.setDate(3, ordenes.getOrder_date());
-		ps.setDate(4, ordenes.getShipped_date());
-		ps.setInt(5, ordenes.getShipper_id());
-		ps.setString(6, ordenes.getShip_name());
-		ps.setDate(7, ordenes.getShipped_date());
-		ps.setString(8, ordenes.getShip_city());
-		ps.setString(9, ordenes.getShip_state_province());
-		ps.setString(10, ordenes.getShip_zip_postal_code());
-		ps.setString(11, ordenes.getShip_country_region());
-		ps.setBigDecimal(12, ordenes.getShipping_fee());
-		ps.setBigDecimal(13, ordenes.getTaxes());
-		ps.setString(14, ordenes.getPayment_type());
-		ps.setDate(15, ordenes.getPaid_date());
-		ps.setString(16, ordenes.getNotes());
-		ps.setDouble(17, ordenes.getTax_rate());
-		ps.setBoolean(18, ordenes.getTax_status_id());
-		ps.setBoolean(19, ordenes.getStatus_id());
-		ps.setInt(20, ordenes.getId());
+	    ps.setObject(1, ordenes.getEmployee_id());
+		ps.setObject(2, ordenes.getCustomer_id());
+		ps.setObject(3, ordenes.getOrder_date());
+		ps.setObject(4, ordenes.getShipped_date());
+		ps.setObject(5, ordenes.getShipper_id());
+		ps.setObject(6, ordenes.getShip_name());
+		ps.setObject(7, ordenes.getShipped_date());
+		ps.setObject(8, ordenes.getShip_city());
+		ps.setObject(9, ordenes.getShip_state_province());
+		ps.setObject(10, ordenes.getShip_zip_postal_code());
+		ps.setObject(11, ordenes.getShip_country_region());
+		ps.setObject(12, ordenes.getShipping_fee());
+		ps.setObject(13, ordenes.getTaxes());
+		ps.setObject(14, ordenes.getPayment_type());
+		ps.setObject(15, ordenes.getPaid_date());
+		ps.setObject(16, ordenes.getNotes());
+		ps.setObject(17, ordenes.getTax_rate());
+		ps.setObject(18, ordenes.getTax_status_id());
+		ps.setObject(19, ordenes.getStatus_id());
+		ps.setObject(20, ordenes.getId());
 	  
 
 	    resultado = (ps.executeUpdate() > 0);

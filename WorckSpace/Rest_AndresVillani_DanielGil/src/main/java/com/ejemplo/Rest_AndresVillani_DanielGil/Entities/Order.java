@@ -232,7 +232,7 @@ public class Order {
 		this.taxes = taxes;
 	}
 
-	public double getTax_rate() {
+	public Double getTax_rate() {
 		return tax_rate;
 	}
 

@@ -106,6 +106,7 @@ public class OrdersRest {
 	    ordenActualizado = orders.update(ordenes);
 	    response = Response.status(Response.Status.OK).entity(ordenActualizado).build();
 	} catch (Exception e) {
+		e.printStackTrace();
 	    response = Response.status(Response.Status.NOT_MODIFIED).entity("ERROR: " + e.getCause() + " " + e.getMessage())
 		    .build();
 	}

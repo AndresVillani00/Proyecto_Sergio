@@ -6,7 +6,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class DBFactory {
     static final String JDBCHOST = "jdbc:mysql://localhost:3306/northwind?useSSL=false";
-    static final String JDBCUSER = "northwind";
+    static final String JDBCUSER = "nothwind";
     static final String JDBCPASSWD = "northwind";
 
     public static DataSource getMySQLDataSource() {
